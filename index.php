@@ -1,8 +1,13 @@
 <?php
+// Hacemos require_once de SessionHelper para poder utilizarlo
 require_once 'utils/SessionHelper.php';
 
+// Regocemos la página a la que se quiere redirigir
 $page = $_GET['page'] ?? null;
 
+// Si no se hace ninguna petición de redirigir a ninguna página:
+// Se busca si se ha visitado algún equipo y se redirige a la página para ver los partidos de ese último equipo
+// O se redirige de manera predeterminada a la página de equipos
 if (!$page) {
     $ultimVisitada = SessionHelper::getLastViewedTeam();
     if ($ultimVisitada) {
@@ -14,8 +19,10 @@ if (!$page) {
     }
 }
 
+// Se hace require_once del header, que también contiene el menú de navegación
 require_once 'templates/header.php';
 
+// Se añade la página solicitada
 switch ($page) {
     case 'equipos':
         include 'app/equipos.php';

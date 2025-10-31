@@ -1,9 +1,11 @@
 <?php
 require_once 'GenericDAO.php';
 
+// Clase para hacer las consultas de los partidos a la base de datos que extiende de GenericDAO
 class MatchDAO extends GenericDAO
 {
 
+    // Consulta para obtener los partidos de una jornada
     public function getByJornada($jornada)
     {
         $sql = "
@@ -22,6 +24,7 @@ class MatchDAO extends GenericDAO
         return $matches;
     }
 
+    // Consulta para obtener los partidos de un equipo por su id
     public function getByTeam($teamId)
     {
         $sql = "
@@ -40,6 +43,7 @@ class MatchDAO extends GenericDAO
         return $matches;
     }
 
+    // Consulta para comprobar si existe el mismo partido (mismo local vs mismo visitante)
     public function existsSameMatch($home, $away)
     {
         $sql = "SELECT COUNT(*) AS c 
@@ -52,6 +56,7 @@ class MatchDAO extends GenericDAO
         return $res['c'] > 0;
     }
 
+    // Consulta para comprobar si un equipo ya ha participado en una jornada
     public function teamPlaysThisRound($teamId, $jornada)
     {
         $sql = "SELECT COUNT(*) AS c FROM matches 
@@ -64,6 +69,7 @@ class MatchDAO extends GenericDAO
         return $res['c'] > 0;
     }
 
+    // Consulta para obtener el estadio de un equipo
     public function getTeamStadium($teamId)
     {
         $sql = "SELECT stadium FROM teams WHERE id = ?";
@@ -74,6 +80,7 @@ class MatchDAO extends GenericDAO
         return $res ? $res['stadium'] : null;
     }
 
+    // Consulta para insertar un nuevo partido
     public function insert($home, $away, $jornada, $result, $stadium)
     {
         $sql = "INSERT INTO matches (team_home_id, team_away_id, jornada, result, stadium)
@@ -83,6 +90,7 @@ class MatchDAO extends GenericDAO
         return $stmt->execute();
     }
 
+    // Consulta para obtener la máxima jornada con partidos registrados
     public function getMaxJornada()
     {
         $result = mysqli_query($this->conn, "SELECT MAX(jornada) AS mj FROM matches");
@@ -90,6 +98,7 @@ class MatchDAO extends GenericDAO
         return $row ? intval($row['mj']) : 0;
     }
 
+    // Consulta para saber cuántos equipos hay
     public function countTeams()
     {
         $res = mysqli_query($this->conn, "SELECT COUNT(*) AS c FROM teams");

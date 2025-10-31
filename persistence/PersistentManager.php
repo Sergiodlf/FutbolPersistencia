@@ -1,5 +1,7 @@
 <?php
-class PersistentManager {
+// Clase PersistentManager para conectar con la base de datos
+class PersistentManager
+{
 
     private static $instance = null;
     private static $connection = null;
@@ -9,19 +11,23 @@ class PersistentManager {
     private $nameBD = "";
     private $hostBD = "";
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->loadCredentials();
         $this->connect();
     }
 
-    private function loadCredentials() {
+    // Se recoge los parámetros de configuración para conectar con la base de datos
+    private function loadCredentials()
+    {
         $path = __DIR__ . '/conf/credentials.json';
         if (!file_exists($path)) {
             echo "<div class='alert alert-danger'>No se encontró el archivo de configuración de base de datos.</div>";
@@ -35,7 +41,9 @@ class PersistentManager {
         $this->nameBD = $cred["name"];
     }
 
-    private function connect() {
+    // Se intenta conectar con la base de datos
+    private function connect()
+    {
         try {
             self::$connection = new mysqli(
                 $this->hostBD,
@@ -54,8 +62,8 @@ class PersistentManager {
         }
     }
 
-    public function get_connection() {
+    public function get_connection()
+    {
         return self::$connection;
     }
 }
-?>

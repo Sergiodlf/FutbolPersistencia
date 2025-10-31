@@ -11,5 +11,7 @@
 </head>
 
 <body>
+    <? // hacemos un include del menú de navegación  
+    ?>
     <?php include 'templates/menu.php'; ?>
     <div class="container mt-4">
