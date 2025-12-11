@@ -26,7 +26,3 @@ Repositorio donde se guarda la aplicación web de fútbol con persistencia de Se
 - Carpeta templates donde se encuentra el footer, head y header.
 - Carpeta utils donde se encuentra SessionHelper.php.
 - index.php: Es la encargada de redirigirte a la página correspondiente.
-
-
-
-- prueba
